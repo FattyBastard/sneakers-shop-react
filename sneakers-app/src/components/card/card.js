@@ -13,7 +13,6 @@ function Card({img, info, price}){
     setLike(!like);
   }
 
-  
   return (
     <div className='app-card d-flex flex-column'>
       <div className="favorite">

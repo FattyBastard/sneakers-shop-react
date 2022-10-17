@@ -11,7 +11,27 @@ ul, p, h1, h2, h3, h4, h5, h6{
 
 .app {
   
-
+  .overlay{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    .drawer{
+      position: absolute;
+      width: 385px;
+      height: 100%;
+      right: 0;
+      z-index: 99;
+      background: #FFFFFF;
+      box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    }
+    
+    
+  }
+  
   
   .app-mainblock{
     // position: absolute;
@@ -33,6 +53,10 @@ ul, p, h1, h2, h3, h4, h5, h6{
       padding-bottom: 43px;
       padding-left: 45px;
       border-bottom: 1px solid #EAEAEA;
+
+      .links{
+        cursor: pointer;
+      }
 
       .left-part{
         align-items: center;

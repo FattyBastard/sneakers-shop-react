@@ -1,0 +1,29 @@
+{
+    "cards":[
+        {
+            "img" : "https://static.insales-cdn.com/images/products/1/890/304333690/5.jpg",
+            "info" : "Мужские Кроссовки Nike Blazer Mid Suede",
+            "price" : "12 999 руб."
+        },
+        {
+            "img" : "https://russiangolfer.ru/2270-thickbox_default/krossovki-nike-wmns-lunar-control-vapor-2.jpg",
+            "info" : "Мужские Кроссовки Nike lore lorem",
+            "price" : "12 999 руб."
+        },
+        {
+            "img" : "https://ae04.alicdn.com/kf/HTB1KaLKXvLsK1Rjy0Fbq6xSEXXa6/Xiaying-Smile-2018.jpg",
+            "info" : "Мужские Кроссовки Nike lore lorem",
+            "price" : "12 999 руб."
+        },
+        {
+            "img" : "https://nike-off.ru/wp-content/uploads/2018/09/DSCN8572.jpg",
+            "info" : "Мужские Кроссовки Nike lore lorem",
+            "price" : "12 999 руб."
+        },
+        {
+            "img" : "https://nike-off.ru/wp-content/uploads/2018/09/DSCN8572.jpg",
+            "info" : "Мужские Кроссовки Nike lore lorem",
+            "price" : "12 999 руб."
+        }
+    ]
+}

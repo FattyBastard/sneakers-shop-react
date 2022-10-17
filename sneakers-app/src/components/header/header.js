@@ -11,18 +11,18 @@ function Header(props) {
             </div>
           </div>
           <ul className='right-part d-flex align-items-center'>
-            <li className='mr-30'>
+            <li onClick={props.onClickCart} className='mr-30 links'>
               <a>
                 <img alt="cart" src='../img/cart.svg' className='mr-10'></img>
               </a>
               <span>1205 руб.</span>
             </li>
-            <li className='mr-30'>
+            <li className='mr-30 links'>
               <a>
                 <img alt="heart" src='../img/heart.svg'></img>
               </a>
             </li>
-            <li className=''>
+            <li className='links'>
               <a>
                 <img alt="profile" src='../img/profile.svg'></img>
               </a>
