@@ -1,11 +1,12 @@
 import React, {Component, useState} from "react";
 
-function Card({img, info, price}){
+function Card({img, info, price, onAddCard}){
 
   const [like, setLike] = React.useState(false);
   const [add, setAddItem] = React.useState(false);
 
-  const onClickPlus = () => {
+  const onClickPlus = (obj) => {
+    onAddCard({img, info, price});
     setAddItem(!add);
   }
 
@@ -25,7 +26,7 @@ function Card({img, info, price}){
           <p className='header-price'>ЦЕНА:</p>
           <p className='price'>{price}</p>
         </div>
-        <img onClick={onClickPlus} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
+        <img onClick={(obj) => onClickPlus(obj)} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
       </div> 
     </div>
 )

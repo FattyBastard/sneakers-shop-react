@@ -8,6 +8,7 @@ import Drawer from '../drawer';
 function App() {
   const [cartPanel, setCartPanel] = React.useState(false);
   const [cards, setCards] = React.useState([]);
+  const [selectedCards, setSelectedCards] = React.useState([]);
 
 
   React.useEffect(() => {
@@ -21,11 +22,17 @@ function App() {
     setCartPanel(!cartPanel)
   }
 
+  const onAddCard = (object) => {
+    setSelectedCards(prev => [...prev, object]);
+  }
+
   return (
     
     <div className="app clear">
       <div className='app-mainblock'>
-        {cartPanel ? <Drawer onClickClose={onClickCart} />: null}
+        {cartPanel ? <Drawer 
+                        selectedCards={selectedCards}
+                        onClickClose={onClickCart} />: null}
         <Header onClickCart={onClickCart}/>
         <div className='pl-45 pr-50 pt-50'>
           <h4 className='fw-bold pb-40'>Все кроссовки</h4>
@@ -33,7 +40,8 @@ function App() {
             {cards.map(object => (
               <Card img={object.img}
                     info={object.info}
-                    price={object.price}/>
+                    price={object.price}
+                    onAddCard={(obj) => onAddCard(obj)}/>
             ))}
           </div> 
         </div>

@@ -1,10 +1,27 @@
 import React from "react";
+import DrawerItem from "../drawer-item";
 
-function Drawer(props){
+function Drawer({selectedCards, onClickClose}){
     return (
         <div className='overlay'>
           <div className='drawer'>
-            <img onClick={props.onClickClose} alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
+            <div className="d-flex justify-content-between">
+                <h2>Корзина</h2>
+                <img className="" onClick={onClickClose} alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
+            </div>
+            <div className="upper-part d-flex flex-column">
+                {selectedCards.map(object => (
+                    <DrawerItem img={object.img}
+                                info={object.info}
+                                price={object.price}
+                                onDelete={() => {console.log("delete item")}}/>
+                ))}
+                
+            </div>
+            <div className="bottom-part">
+
+            </div>
+            
           </div>
         </div>
     )
