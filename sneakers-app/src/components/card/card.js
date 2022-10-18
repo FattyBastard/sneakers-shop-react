@@ -1,12 +1,12 @@
 import React, {Component, useState} from "react";
 
-function Card({img, info, price, onAddCard}){
+function Card({id, img, info, price, onAddCard}){
 
   const [like, setLike] = React.useState(false);
   const [add, setAddItem] = React.useState(false);
 
-  const onClickPlus = (obj) => {
-    onAddCard({img, info, price});
+  const onClickPlus = () => {
+    onAddCard({id, img, info, price});
     setAddItem(!add);
   }
 
@@ -15,7 +15,7 @@ function Card({img, info, price, onAddCard}){
   }
 
   return (
-    <div className='app-card d-flex flex-column'>
+    <div key={id} className='app-card d-flex flex-column'>
       <div className="favorite">
         <img alt="like" height={32} width={32} onClick={onClickLike} src={like ? "../img/liked-card.svg" : "../img/like-card.svg"}></img>
       </div>
@@ -26,7 +26,7 @@ function Card({img, info, price, onAddCard}){
           <p className='header-price'>ЦЕНА:</p>
           <p className='price'>{price}</p>
         </div>
-        <img onClick={(obj) => onClickPlus(obj)} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
+        <img onClick={() => onClickPlus()} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
       </div> 
     </div>
 )

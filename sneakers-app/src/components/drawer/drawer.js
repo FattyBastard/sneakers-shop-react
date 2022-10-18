@@ -1,7 +1,7 @@
 import React from "react";
 import DrawerItem from "../drawer-item";
 
-function Drawer({selectedCards, onClickClose}){
+function Drawer({selectedCards, onClickClose, onDeleteCard}){
     return (
         <div className='overlay'>
           <div className='drawer'>
@@ -11,10 +11,12 @@ function Drawer({selectedCards, onClickClose}){
             </div>
             <div className="upper-part d-flex flex-column">
                 {selectedCards.map(object => (
-                    <DrawerItem img={object.img}
+                    <DrawerItem 
+                                id={object.id}
+                                img={object.img}
                                 info={object.info}
                                 price={object.price}
-                                onDelete={() => {console.log("delete item")}}/>
+                                onDelete={(obj) => onDeleteCard(obj)}/>
                 ))}
                 
             </div>
