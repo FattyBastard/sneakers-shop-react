@@ -8,7 +8,7 @@ function DrawerItem({id, img, info, price, onDelete, setPriceAfterAct, getReadab
     }
 
     return (
-        <div key={id} className="d-flex drawer-item align-center">
+        <div key={id} className="drawer-item d-flex drawer-item align-center">
             <img label="sneaker" height={70} width={70} src={img}></img>
             <div className="d-flex flex-column">
                 <p>
@@ -16,7 +16,7 @@ function DrawerItem({id, img, info, price, onDelete, setPriceAfterAct, getReadab
                 </p>
                 <span>{getReadablePrice(price)}</span>
             </div>
-            <img onClick={() => onDel(id)} alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
+            <img onClick={() => onDel(id)}  className="close" alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
         </div>
     )
 }

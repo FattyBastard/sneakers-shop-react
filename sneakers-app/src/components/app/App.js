@@ -68,14 +68,14 @@ function App() {
           <div className='d-flex justify-between flex-wrap'>
             {cards.filter(card => card.info.toLowerCase().includes(inputValue.toLowerCase())).map((object, index) => (
               <Card img={object.img}
+                    key={object.id}
+                    id={object.id}
                     info={object.info}
                     price={object.price}
                     getReadablePrice={getReadablePrice}
                     setPriceAfterAct={setPriceAfterAct}
                     onDeleteCard={onDeleteCard}
-                    onAddCard={(obj) => onAddCard(obj)}
-                    key={index + 1}
-                    id={index}/>
+                    onAddCard={(obj) => onAddCard(obj)}/>
             ))}
           </div> 
         </div>
