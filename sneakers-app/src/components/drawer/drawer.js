@@ -38,8 +38,7 @@ function Drawer({selectedCards = [], onClickClose, onDeleteCard, purchasePrice, 
                                 onDelete={(obj) => onDeleteCard(obj)}/>
                 ))}
                 
-            </div>
-                
+            </div>               
             <div className="bottom-part">
                 <ul className="total-price">
                     <li className="d-flex ">

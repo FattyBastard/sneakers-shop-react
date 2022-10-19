@@ -1,6 +1,6 @@
 import React, {Component, useState} from "react";
 
-function Card({id, img, info, price, onDeleteCard, setPriceAfterAct, onAddCard, getReadablePrice}){
+function Card({img, info, price, onDeleteCard, setPriceAfterAct, onAddCard, getReadablePrice, id}){
 
   const [like, setLike] = React.useState(false);
   const [add, setAddItem] = React.useState(false);

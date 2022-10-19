@@ -10,6 +10,11 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [selectedCards, setSelectedCards] = React.useState([]);
   const [purchasePrice, setPurchasePrice] = React.useState(0);
+  const [inputValue, setInputValue] = React.useState('');
+
+  const onUpdateInputValue = (event) => {
+    setInputValue(event.target.value);
+  }
 
   const onClickCart = () => {
     setCartPanel(!cartPanel);
@@ -56,15 +61,12 @@ function App() {
             <h4 className='fw-bold '>Все кроссовки</h4>
             <div className='search-field d-flex align-center'>
               <img alt="search" src="img/search.svg" height={15} width={15}></img>
-              <input className='input-search' alt="search" name='search' placeholder='Поиск...'>
+              <input onChange={(event) => onUpdateInputValue(event)} className='input-search' alt="search" name='search' placeholder='Поиск...'>
               </input>
             </div>
-            
-              
-
           </div>
           <div className='d-flex justify-between flex-wrap'>
-            {cards.map((object, index) => (
+            {cards.filter(card => card.info.toLowerCase().includes(inputValue.toLowerCase())).map((object, index) => (
               <Card img={object.img}
                     info={object.info}
                     price={object.price}
@@ -72,7 +74,8 @@ function App() {
                     setPriceAfterAct={setPriceAfterAct}
                     onDeleteCard={onDeleteCard}
                     onAddCard={(obj) => onAddCard(obj)}
-                    id={index + 1}/>
+                    key={index + 1}
+                    id={index}/>
             ))}
           </div> 
         </div>
