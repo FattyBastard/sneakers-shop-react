@@ -9,7 +9,19 @@ function App() {
   const [cartPanel, setCartPanel] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [selectedCards, setSelectedCards] = React.useState([]);
+  const [purchasePrice, setPurchasePrice] = React.useState(0);
 
+  const onClickCart = () => {
+    setCartPanel(!cartPanel);
+  }
+
+  const onDeleteCard = (id) => {
+    setSelectedCards(prev => prev.filter(item => item.id !== id));
+  }
+
+  const onAddCard = (object) => {
+    setSelectedCards(prev => [...prev, object]);
+  }
 
   React.useEffect(() => {
     fetch("http://localhost:8000/cards")
@@ -17,39 +29,48 @@ function App() {
       .then(json => setCards(json));
   },[]);
 
-
-  const onClickCart = () => {
-    setCartPanel(!cartPanel)
+  const getReadablePrice = (price) => {
+    return (price + ' руб.')
   }
 
-  const onDeleteCard = (id) => {
-    
-    setSelectedCards(prev => prev.filter(item => item.id !== id));
+  const setPriceAfterAct = (price) => {
+    const newPrice = purchasePrice + parseInt(price);
+    setPurchasePrice(newPrice);
   }
-
-  const onAddCard = (object) => {
-    // console.log(object.id);
-    setSelectedCards(prev => [...prev, object]);
-  }
-
-  // console.log(selectedCards);
 
   return (
-    
     <div className="app clear">
       <div className='app-mainblock'>
-        {cartPanel ? <Drawer 
+        {cartPanel ? <Drawer                      
+                        purchasePrice={purchasePrice}
+                        setPriceAfterAct={setPriceAfterAct}
+                        getReadablePrice={getReadablePrice}
                         selectedCards={selectedCards}
                         onClickClose={onClickCart} 
                         onDeleteCard={(obj) => onDeleteCard(obj)}/>: null}
-        <Header onClickCart={onClickCart}/>
+        <Header 
+                purchasePrice={getReadablePrice(purchasePrice)}
+                onClickCart={onClickCart}/>
         <div className='pl-45 pr-50 pt-50'>
-          <h4 className='fw-bold pb-40'>Все кроссовки</h4>
+          <div className='d-flex justify-content-between align-center pb-40'>
+            <h4 className='fw-bold '>Все кроссовки</h4>
+            <div className='search-field d-flex align-center'>
+              <img alt="search" src="img/search.svg" height={15} width={15}></img>
+              <input className='input-search' alt="search" name='search' placeholder='Поиск...'>
+              </input>
+            </div>
+            
+              
+
+          </div>
           <div className='d-flex justify-between flex-wrap'>
             {cards.map((object, index) => (
               <Card img={object.img}
                     info={object.info}
                     price={object.price}
+                    getReadablePrice={getReadablePrice}
+                    setPriceAfterAct={setPriceAfterAct}
+                    onDeleteCard={onDeleteCard}
                     onAddCard={(obj) => onAddCard(obj)}
                     id={index + 1}/>
             ))}

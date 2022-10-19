@@ -1,13 +1,20 @@
 import React, {Component, useState} from "react";
 
-function Card({id, img, info, price, onAddCard}){
+function Card({id, img, info, price, onDeleteCard, setPriceAfterAct, onAddCard, getReadablePrice}){
 
   const [like, setLike] = React.useState(false);
   const [add, setAddItem] = React.useState(false);
 
-  const onClickPlus = () => {
-    onAddCard({id, img, info, price});
-    setAddItem(!add);
+  const handlerPressCard = () => {
+    if (add){
+      onDeleteCard(id);
+      setPriceAfterAct(price*(-1));
+      setAddItem(!add);
+    }else{
+      onAddCard({id, img, info, price});
+      setPriceAfterAct(price);
+      setAddItem(!add);
+    }
   }
 
   const onClickLike = () => {
@@ -24,9 +31,9 @@ function Card({id, img, info, price, onAddCard}){
       <div className='d-flex align-items-center justify-content-between'>
         <div className=''>
           <p className='header-price'>ЦЕНА:</p>
-          <p className='price'>{price}</p>
+          <p className='price'>{getReadablePrice(price)}</p>
         </div>
-        <img onClick={() => onClickPlus()} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
+        <img onClick={() => handlerPressCard()} alt="add"  height={32} width={32} src={add ? '../img/added-card.svg' : '../img/plus-card.svg'}></img>
       </div> 
     </div>
 )

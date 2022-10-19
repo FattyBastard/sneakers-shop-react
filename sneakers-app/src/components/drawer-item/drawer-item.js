@@ -1,6 +1,11 @@
 import React from "react";
 
-function DrawerItem({id, img, info, price, onDelete}){
+function DrawerItem({id, img, info, price, onDelete, setPriceAfterAct, getReadablePrice}){
+
+    const onDel = () => {
+        setPriceAfterAct(price * (-1));
+        onDelete(id);
+    }
 
     return (
         <div key={id} className="d-flex drawer-item align-center">
@@ -9,9 +14,9 @@ function DrawerItem({id, img, info, price, onDelete}){
                 <p>
                     {info}
                 </p>
-                <span>{price}</span>
+                <span>{getReadablePrice(price)}</span>
             </div>
-            <img onClick={() => onDelete(id)} alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
+            <img onClick={() => onDel(id)} alt="close" height={32} width={32} src="/img/close-cart.svg"></img>
         </div>
     )
 }
