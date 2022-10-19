@@ -272,6 +272,7 @@ ul, p, h1, h2, h3, h4, h5, h6{
 }
 
 .empty-list{
+  flex: 1;
     img{
       margin-bottom: 21px;
     }
@@ -295,6 +296,7 @@ ul, p, h1, h2, h3, h4, h5, h6{
       margin-bottom: 40px;
     }
     button{
+      margin-top: 40px;
       position: relative;
       background: #9DD558;
       border-radius: 18px;

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import axios from "axios";
 import './App.scss';
 import "macro-css";
 import Header from '../header';
@@ -20,19 +21,40 @@ function App() {
     setCartPanel(!cartPanel);
   }
 
-  const onDeleteCard = (id) => {
+  const onDeleteCard = async (id) => {
+    await axios.delete(`http://localhost:8000/selectedCards/${id}`);
     setSelectedCards(prev => prev.filter(item => item.id !== id));
   }
 
-  const onAddCard = (object) => {
+  const onAddCard = async (object) => {
+    await axios.post("http://localhost:8000/selectedCards", object);
     setSelectedCards(prev => [...prev, object]);
   }
 
   React.useEffect(() => {
-    fetch("http://localhost:8000/cards")
-    .then(result => result.json())
-      .then(json => setCards(json));
+    axios.get("http://localhost:8000/cards")
+    .then(res => {
+      setCards(res.data)
+    });
+
+    axios.get("http://localhost:8000/selectedCards")
+      .then(res => {
+        setSelectedCards(res.data)
+      });
   },[]);
+
+  React.useEffect(() => {
+    getSumPrice(selectedCards);
+  }, [selectedCards])
+
+function getSumPrice(selectedCards){
+  const sum = selectedCards.reduce((accumulator, currentValue) => {
+      return accumulator += parseInt(currentValue.price);
+  },0)
+  
+  setPurchasePrice(sum);
+}
+
 
   const getReadablePrice = (price) => {
     return (price + ' руб.')
