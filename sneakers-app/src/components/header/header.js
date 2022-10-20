@@ -1,15 +1,18 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 function Header({onClickCart, purchasePrice}) {
     return (
         <header className="app-header d-flex justify-content-between pr-50">
-          <div className='left-part d-flex'>
-            <img className='header-logo' alt="logo" src='../img/logo.svg'></img>
-            <div className='flex-column'>
-              <h6>REACT SNEAKERS</h6>
-              <p>Магазин лучших кроссовок</p>
+          <Link to="/">
+            <div className='left-part d-flex'>
+              <img className='header-logo' alt="logo" src='../img/logo.svg'></img>
+              <div className='flex-column'>
+                <h6>REACT SNEAKERS</h6>
+                <p>Магазин лучших кроссовок</p>
+              </div>
             </div>
-          </div>
+          </Link>
           <ul className='right-part d-flex align-items-center'>
             <li onClick={onClickCart} className='mr-30 links'>
               <a>
@@ -18,9 +21,9 @@ function Header({onClickCart, purchasePrice}) {
               <span>{purchasePrice}</span>
             </li>
             <li className='mr-30 links'>
-              <a>
+              <Link to="/favorites">
                 <img alt="heart" src='../img/heart.svg'></img>
-              </a>
+              </Link>
             </li>
             <li className='links'>
               <a>
