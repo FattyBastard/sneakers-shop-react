@@ -22,23 +22,30 @@ function App() {
     setInputValue(event.target.value);
   }
   const onClickFavorite = async (obj) => {
-    console.log(obj);
-    if (favoriteCards.find(item => item.id === obj.id)){
-      await axios.delete(`http://localhost:8000/favoriteCards/${obj.id}`);
-      setFavoriteCards(prev => prev.filter(item => item.id !== obj.id));
-    }else{
-      await axios.post(`http://localhost:8000/favoriteCards`, obj);
-      setFavoriteCards(prev => [...prev, obj]);
+    try {
+      if (favoriteCards.find(item => item.id === obj.id)){
+        await axios.delete(`http://localhost:8000/favoriteCards/${obj.id}`);
+        setFavoriteCards(prev => prev.filter(item => item.id !== obj.id));
+      }else{
+        await axios.post(`http://localhost:8000/favoriteCards`, obj);
+        setFavoriteCards(prev => [...prev, obj]);
+      }
+    } catch (error) {
+      alert("Не удалось добавить фовариты");
     }
   }
 
   const onClickAdd = async (obj) => {
-    if (selectedCards.find(item => item.id === obj.id)){
-      await axios.delete(`http://localhost:8000/selectedCards/${obj.id}`);
-      setSelectedCards(prev => prev.filter(item => item.id !== obj.id));
-    }else{
-      await axios.post(`http://localhost:8000/selectedCards`, obj);
-      setSelectedCards(prev => [...prev, obj]);
+    try {
+      if (selectedCards.find(item => item.id === obj.id)){
+        await axios.delete(`http://localhost:8000/selectedCards/${obj.id}`);
+        setSelectedCards(prev => prev.filter(item => item.id !== obj.id));
+      }else{
+        await axios.post(`http://localhost:8000/selectedCards`, obj);
+        setSelectedCards(prev => [...prev, obj]);
+      }
+    } catch (error) {
+      alert("Не удалось добавть товар в корзину");
     }
   }
 
@@ -51,32 +58,29 @@ function App() {
     setSelectedCards(prev => prev.filter(item => item.id !== id));
   }
 
-  // const onAddCard = async (object) => {
-  //   await axios.post("http://localhost:8000/selectedCards", object);
-  //   setSelectedCards(prev => [...prev, object]);
-  // }
+  
 
   React.useEffect(() => {
-    axios.get("http://localhost:8000/cards")
-    .then(res => {
-      setCards(res.data)
-    });
 
-    axios.get("http://localhost:8000/selectedCards")
+    async function getData(url){
+      return await axios.get(url)
+    }
+    getData("http://localhost:8000/selectedCards")
       .then(res => {
-        setSelectedCards(res.data)
-      });
-
-    axios.get("http://localhost:8000/favoriteCards")
-    .then(res => {
-      setFavoriteCards(res.data)
-    });
-
+        setSelectedCards(res.data)});
+    getData("http://localhost:8000/favoriteCards")
+      .then(res => {
+        setFavoriteCards(res.data)});
+    getData("http://localhost:8000/cards")
+      .then(res => {
+        setCards(res.data)});
   },[]);
 
   // React.useEffect(() => {
   //   getSumPrice(selectedCards);
   // }, [selectedCards])
+
+
 
 function getSumPrice(selectedCards){
   const sum = selectedCards.reduce((accumulator, currentValue) => {
@@ -115,21 +119,18 @@ function getSumPrice(selectedCards){
                                                      cards={cards}
                                                      getReadablePrice={getReadablePrice}
                                                      setPriceAfterAct={setPriceAfterAct}
-                                                    //  onDeleteCard={onDeleteCard}
-                                                    //  onAddCard={onAddCard}
                                                      onClickAdd={onClickAdd}
                                                      onClickFavorite={onClickFavorite}
                                                      onUpdateInputValue={onUpdateInputValue}
-                                                     setFavoriteCards={setFavoriteCards}
+                                                     selectedCards={selectedCards}
                                                      favoriteCards={favoriteCards}/>}/>
-                <Route path="/favorites" exact element={<Favorites getReadablePrice={getReadablePrice}
-                                                     setPriceAfterAct={setPriceAfterAct}
-                                                    //  onDeleteCard={onDeleteCard}
-                                                    //  onAddCard={onAddCard}    
+                <Route path="/favorites" exact element={<Favorites 
+                                                     getReadablePrice={getReadablePrice}
+                                                     setPriceAfterAct={setPriceAfterAct}   
                                                      onClickAdd={onClickAdd}
                                                      onClickFavorite={onClickFavorite}                                                
-                                                     setFavoriteCards={setFavoriteCards}
-                                                     favoriteCards={favoriteCards}/>}/>
+                                                     favoriteCards={favoriteCards}
+                                                     selectedCards={selectedCards}/>}/>
             </Routes>
           </div>
       </div>

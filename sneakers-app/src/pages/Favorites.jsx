@@ -2,7 +2,7 @@ import React from "react";
 import Drawer from "../components/drawer";
 import Card from "../components/card";
 
-function Favorites({ getReadablePrice, setPriceAfterAct, onClickAdd, onClickFavorite,  setFavoriteCards, favoriteCards=[]}){
+function Favorites({ getReadablePrice, setPriceAfterAct, onClickAdd, onClickFavorite, selectedCards, favoriteCards=[]}){
     return (
         
     <div className='pl-45 pr-50 pt-50'>
@@ -10,16 +10,25 @@ function Favorites({ getReadablePrice, setPriceAfterAct, onClickAdd, onClickFavo
             <h4 className='fw-bold '>Мои закладки</h4>
         </div>
         <div className='d-flex justify-between flex-wrap'>
-        {favoriteCards.map((object) => (
-            <Card 
+        {favoriteCards.map((object, index) => {
+            let add = false;
+            let favorite = true;
+            if (selectedCards.find(item => item.id === object.id)){
+                console.log("+");
+                add = true;
+            }
+            return (
+                <Card 
                 key={object.id}
                 getReadablePrice={getReadablePrice}
                 setPriceAfterAct={setPriceAfterAct}
                 onClickAdd={onClickAdd}
                 onClickFavorite={onClickFavorite}
-                setFavoriteCards={setFavoriteCards}
+                addCart={add}
+                favorite={favorite}
                 {...object}/>
-        ))}
+            ) 
+        })}
         </div> 
     </div>
     )
