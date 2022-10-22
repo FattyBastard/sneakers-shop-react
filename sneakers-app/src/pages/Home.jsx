@@ -2,7 +2,30 @@ import React from "react";
 import Drawer from "../components/drawer";
 import Card from "../components/card";
 
-function Home({cards, inputValue, getReadablePrice, setPriceAfterAct, onClickAdd, onClickFavorite, onUpdateInputValue, selectedCards, favoriteCards=[]}){
+function Home({cards,
+    inputValue,
+    onClickAdd,
+    onClickFavorite,
+    onUpdateInputValue,
+    selectedCards,
+    favoriteCards=[],
+    isLoaded}){
+
+    const renderItems = () => {
+        const filteredItems = cards.filter(card => card.info.toLowerCase().includes(inputValue.toLowerCase()));
+        console.log(filteredItems);
+        return (isLoaded ? filteredItems : [...Array(10)]).map((object, index) => (
+                
+                    <Card 
+                        addCart={selectedCards.some(item => parseInt(item.id) === parseInt(object.id))}
+                        favorite={favoriteCards.some(item => parseInt(item.id) === parseInt(object.id))}
+                        key={index}
+                        onClickAdd={onClickAdd}
+                        onClickFavorite={onClickFavorite}
+                        isLoaded={isLoaded}
+                        {...object}/>
+        )); 
+    }
 
     return (
         
@@ -15,29 +38,10 @@ function Home({cards, inputValue, getReadablePrice, setPriceAfterAct, onClickAdd
             </input>
         </div>
         </div>
-        <div className='d-flex justify-between flex-wrap'>
-        {cards.filter(card => card.info.toLowerCase().includes(inputValue.toLowerCase())).map((object, index) => {
-            let add = false;
-            let favorite = false;
-            if (selectedCards.find(item => item.id === object.id)){
-                console.log("+");
-                add = true;
-            }
-            if (favoriteCards.find(item => item.id === object.id)){
-                favorite = true;
-            } 
-            return (
-                <Card 
-                    addCart={add}
-                    favorite={favorite}
-                    key={object.id}
-                    getReadablePrice={getReadablePrice}
-                    setPriceAfterAct={setPriceAfterAct}
-                    onClickAdd={onClickAdd}
-                    onClickFavorite={onClickFavorite}
-                    {...object}/>
-            ) 
-        })}
+        <div className='d-flex flex-wrap'>
+        {
+            renderItems()
+        }
         </div> 
     </div>
     )

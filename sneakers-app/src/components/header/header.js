@@ -1,7 +1,11 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import AppContext from "../context";
 
-function Header({onClickCart, purchasePrice}) {
+function Header({onClickCart}) {
+
+    const {totalPrice} = React.useContext(AppContext);
+
     return (
         <header className="app-header d-flex justify-content-between pr-50">
           <Link to="/">
@@ -18,7 +22,7 @@ function Header({onClickCart, purchasePrice}) {
               <a>
                 <img alt="cart" src='../img/cart.svg' className='mr-10'></img>
               </a>
-              <span>{purchasePrice}</span>
+              <span>{`${totalPrice} руб.`}</span>
             </li>
             <li className='mr-30 links'>
               <Link to="/favorites">
@@ -26,9 +30,9 @@ function Header({onClickCart, purchasePrice}) {
               </Link>
             </li>
             <li className='links'>
-              <a>
+              <Link to="/purchases">
                 <img alt="profile" src='../img/profile.svg'></img>
-              </a>
+              </Link>
             </li>
           </ul>
         </header>

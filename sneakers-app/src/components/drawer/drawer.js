@@ -1,10 +1,33 @@
 import React from "react";
 import DrawerItem from "../drawer-item";
+import Info from "../../pages/Info";
+import AppContext from "../context";
+import { useCart } from "../../hooks/useCart";
+import axios from "axios";
 
-function Drawer({selectedCards = [], onClickClose, onDeleteCard, purchasePrice, setPriceAfterAct, getReadablePrice}){
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    function getTaxPrice(price){
-        return Math.round(price * 0.05);
+function Drawer({onClickClose, onDeleteCard}){
+
+    const [orderCompete, setOrderComplete] = React.useState(false);
+    const [orderId, setOrderId] = React.useState(null);
+    const {selectedCards, setSelectedCards, totalPrice} = useCart();
+
+    const onOrderClicked = async () => {
+        try {
+            const {data} = await axios.post("http://localhost:8000/orders", {"items" : selectedCards});
+            setOrderId(data.id);
+            for (let index = 0; index < selectedCards.length; index++) {
+                const element = selectedCards[index];
+
+                await axios.delete(`http://localhost:8000/selectedCards/${element.id}`)
+                await delay(1000);
+            }
+            setSelectedCards([]);
+            setOrderComplete(true);
+        } catch (error) {
+            alert("Не удалось оформить заказ");
+        }
     }
 
     return (
@@ -17,11 +40,9 @@ function Drawer({selectedCards = [], onClickClose, onDeleteCard, purchasePrice, 
             {selectedCards.length > 0 ? (
             <>
                 <div className="upper-part d-flex flex-column">
-                    {selectedCards.map(object => (
+                    {selectedCards.map((object,index) => (
                         <DrawerItem 
-                            key={object.id}
-                            getReadablePrice={getReadablePrice}
-                            setPriceAfterAct={setPriceAfterAct}
+                            key={index}
                             onDelete={(obj) => onDeleteCard(obj)}
                             {...object}/>
                         ))}
@@ -31,41 +52,24 @@ function Drawer({selectedCards = [], onClickClose, onDeleteCard, purchasePrice, 
                         <li className="d-flex mb-20">
                             <span>Итого:</span>
                             <div className=""></div>
-                            <b>{getReadablePrice(purchasePrice)}</b>
+                            <b>{`${totalPrice} руб.`}</b>
                         </li>
                         <li className="d-flex mb-25">
                             <span>Налог 5%:</span>
                             <div className=""></div>
-                            <b>{getReadablePrice(getTaxPrice(purchasePrice))}</b>
+                            <b>{`${Math.round((totalPrice * 0.05))} руб.`}</b>
                         </li>
                         <li className="d-flex ">
-                            <button className="d-flex offer-btn justify-content-center">Оформить заказ
+                            <button onClick={() => onOrderClicked()} className="d-flex offer-btn justify-content-center">Оформить заказ
                                 <img  className="arrow" src="img/arrow.svg" alt="arrow" height={12} width={14}></img>
                             </button>
                         </li>   
                     </ul>
                 </div>
-            </>) : 
-            (   <ul className="empty-list d-flex flex-column justify-content-center align-center">
-                    <li>
-                        <img src="img/empty-box.svg" height={120} width={120} alt="box"></img>
-                    </li>
-                    <li>
-                        <h1>Корзина пустая</h1>
-                    </li>
-                    <li>
-                        <span className="box-text">
-                            Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ.
-                        </span>
-                    </li>
-                    <li>
-                        <button  onClick={onClickClose} className="d-flex justify-content-center">
-                            Вернуться назад
-                            <img alt="back-arrow" src="img/back-arrow.svg" height={12} width={14}></img>
-                        </button>
-                    </li>
-                </ul> 
-            )
+            </>) : <Info img={orderCompete ? "img/order-complete.svg" : "img/empty-box.svg"}
+                         header={orderCompete ? "Заказ оформлен!" : "Корзина пустая"}
+                         description={orderCompete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке` : "Добавьте хотя бы одну пару кроссовок, чтобы сделать заказ."}
+                         onClickClose={onClickClose}/>
         }           
   
           </div>
