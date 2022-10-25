@@ -2,11 +2,11 @@ import React from "react";
 import Drawer from "../components/drawer";
 import Card from "../components/card";
 
-function Info({img, header, description, onClickClose}){
+function Info({img, header, description, onClickClose, height=120, width=120}){
     return (
         <ul className="empty-list d-flex flex-column justify-content-center align-center">
             <li>
-                <img src={img} height={120} width={120} alt="box"></img>
+                <img src={img} height={height} width={width} alt="box"></img>
             </li>
             <li>
                 <h1>{header}</h1>

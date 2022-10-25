@@ -112,7 +112,7 @@ function App() {
                                                      onClickFavorite={onClickFavorite}
                                                      onUpdateInputValue={onUpdateInputValue}
                                                      isLoaded={isLoaded}/>}/>
-                <Route path="/favorites" exact element={<Favorites   
+                <Route path="/favorites" exact element={<Favorites  
                                                      onClickAdd={onClickAdd}
                                                      onClickFavorite={onClickFavorite}                                                
                                                      favoriteCards={favoriteCards}
