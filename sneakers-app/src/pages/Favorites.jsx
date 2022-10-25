@@ -3,7 +3,7 @@ import Drawer from "../components/drawer";
 import Card from "../components/card";
 import {Link} from "react-router-dom";
 
-function Favorites({onClickAdd, onClickFavorite, selectedCards, favoriteCards=[], isLoaded}){
+function Favorites({onClickAdd, onClickFavorite, favoriteCards=[], isLoaded}){
 
     return (
         
@@ -16,18 +16,12 @@ function Favorites({onClickAdd, onClickFavorite, selectedCards, favoriteCards=[]
         </div>
         <div className='d-flex flex-wrap'>
         {favoriteCards.map((object, index) => {
-            let add = false;
-            let favorite = true;
-            if (selectedCards.find(item => item.id === object.id)){
-                add = true;
-            }
+            
             return (
                 <Card 
-                key={object.id}
+                key={index}
                 onClickAdd={onClickAdd}
                 onClickFavorite={onClickFavorite}
-                addCart={add}
-                favorite={favorite}
                 isLoaded={isLoaded}
                 {...object}/>
             ) 

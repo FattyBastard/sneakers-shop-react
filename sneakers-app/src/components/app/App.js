@@ -68,6 +68,10 @@ function App() {
     return selectedCards.some(item => item.id === id);
   }
 
+  const isFavorite = (id) => {
+    return favoriteCards.some(item => item.id === id);
+  }
+
   React.useEffect(() => {
 
     async function getData(url){
@@ -91,12 +95,14 @@ function App() {
   },[]);
 
   return (
-      <AppContext.Provider value={ {cards, favoriteCards, selectedCards, setSelectedCards, isAddedToCart, totalPrice} }>
+      <AppContext.Provider value={ {cards, favoriteCards, selectedCards, setSelectedCards, isAddedToCart, totalPrice, isFavorite, cartPanel} }>
         <div className="app clear">
           <div className='app-mainblock'>
-            {cartPanel ? <Drawer                      
-                                  onClickClose={onClickCart} 
-                                  onDeleteCard={(obj) => onDeleteCard(obj)}/>: null}
+            {cartPanel ? 
+              <Drawer                     
+              onClickClose={onClickCart} 
+              onDeleteCard={(obj) => onDeleteCard(obj)}/>
+            : null}  
             <Header 
                     onClickCart={onClickCart}/>
             <Routes>
@@ -105,14 +111,11 @@ function App() {
                                                      onClickAdd={onClickAdd}
                                                      onClickFavorite={onClickFavorite}
                                                      onUpdateInputValue={onUpdateInputValue}
-                                                     selectedCards={selectedCards}
-                                                     favoriteCards={favoriteCards}
                                                      isLoaded={isLoaded}/>}/>
                 <Route path="/favorites" exact element={<Favorites   
                                                      onClickAdd={onClickAdd}
                                                      onClickFavorite={onClickFavorite}                                                
                                                      favoriteCards={favoriteCards}
-                                                     selectedCards={selectedCards}
                                                      isLoaded={isLoaded}/>}/>
                 <Route path="/purchases" exact element={<Purchases/>}/>
             </Routes>

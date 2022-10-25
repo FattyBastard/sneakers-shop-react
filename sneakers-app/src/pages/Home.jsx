@@ -7,24 +7,24 @@ function Home({cards,
     onClickAdd,
     onClickFavorite,
     onUpdateInputValue,
-    selectedCards,
-    favoriteCards=[],
     isLoaded}){
 
     const renderItems = () => {
         const filteredItems = cards.filter(card => card.info.toLowerCase().includes(inputValue.toLowerCase()));
-        console.log(filteredItems);
-        return (isLoaded ? filteredItems : [...Array(10)]).map((object, index) => (
-                
-                    <Card 
-                        addCart={selectedCards.some(item => parseInt(item.id) === parseInt(object.id))}
-                        favorite={favoriteCards.some(item => parseInt(item.id) === parseInt(object.id))}
-                        key={index}
-                        onClickAdd={onClickAdd}
-                        onClickFavorite={onClickFavorite}
-                        isLoaded={isLoaded}
-                        {...object}/>
-        )); 
+
+        return (isLoaded ? filteredItems : [...Array(10)]).map((object, index) => {
+        
+            return (        
+                <Card 
+                    key={index}
+                    onClickAdd={onClickAdd}
+                    onClickFavorite={onClickFavorite}
+                    isLoaded={isLoaded}
+                    {...object}/>
+                    )
+            }
+        );
+    
     }
 
     return (

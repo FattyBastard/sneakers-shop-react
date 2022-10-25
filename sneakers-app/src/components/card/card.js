@@ -14,15 +14,18 @@ function Card(
    isLoaded=false,
    showInPurchase=false}){
 
-  const [like, setLike] = React.useState(favorite);
-  const {isAddedToCart} = React.useContext(AppContext);
+
+  // const [like, setLike] = React.useState(favorite);
+  const {isAddedToCart, isFavorite} = React.useContext(AppContext);
+
+
 
   const onClickBuy = () => {
     onClickAdd({id, img, info, price});
   }
   const onClickLike = () => {
     onClickFavorite({id, img, info, price});
-    setLike(!like);
+    // setLike(!like);
   }
 
   return (
@@ -33,7 +36,7 @@ function Card(
           null
         ) : (
         <div className="favorite">
-          <img alt="like" height={32} width={32} onClick={() => onClickLike()} src={like ? "../img/liked-card.svg" : "../img/like-card.svg"}></img>
+          <img alt="like" height={32} width={32} onClick={() => onClickLike()} src={isFavorite(id) ? "../img/liked-card.svg" : "../img/like-card.svg"}></img>
         </div>
         )}
           <img alt="image" height={112} width={133} src={img}></img> 
